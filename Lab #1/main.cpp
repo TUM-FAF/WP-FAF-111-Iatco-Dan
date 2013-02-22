@@ -64,19 +64,19 @@ LRESULT CALLBACK WinProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam)
 	switch(msg)
 	{
 		case WM_GETMINMAXINFO:
-            MINMAXINFO * mmiStruct;
-            mmiStruct = (MINMAXINFO*)lParam;
- 
-            POINT ptPoint;
- 
-            ptPoint.x = 650;    //Minimum width of the window.
-            ptPoint.y = 500;    //Minimum height of the window.
-            mmiStruct->ptMinTrackSize = ptPoint;
- 
-            ptPoint.x = GetSystemMetrics(SM_CXMAXIMIZED);   //Maximum width of the window.
-            ptPoint.y = GetSystemMetrics(SM_CYMAXIMIZED);   //Maximum height of the window.
-            mmiStruct->ptMaxTrackSize = ptPoint;
-        break;
+	            MINMAXINFO * mmiStruct;
+	            mmiStruct = (MINMAXINFO*)lParam;
+	 
+	            POINT ptPoint;
+	 
+	            ptPoint.x = 650;    //Minimum width of the window.
+	            ptPoint.y = 500;    //Minimum height of the window.
+	            mmiStruct->ptMinTrackSize = ptPoint;
+	 
+	            ptPoint.x = GetSystemMetrics(SM_CXMAXIMIZED);   //Maximum width of the window.
+	            ptPoint.y = GetSystemMetrics(SM_CYMAXIMIZED);   //Maximum height of the window.
+	            mmiStruct->ptMaxTrackSize = ptPoint;
+       		break;
 		case WM_PAINT:
 		{
 			RECT rect ;
