@@ -59,12 +59,26 @@ int WINAPI WinMain(HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR lpCmdLine,int nShow
 
 LRESULT CALLBACK WinProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam)
 {
+	HDC hdc ;
+	PAINTSTRUCT ps ;
 	switch(msg)
 	{
+		case WM_GETMINMAXINFO:
+            MINMAXINFO * mmiStruct;
+            mmiStruct = (MINMAXINFO*)lParam;
+ 
+            POINT ptPoint;
+ 
+            ptPoint.x = 650;    //Minimum width of the window.
+            ptPoint.y = 500;    //Minimum height of the window.
+            mmiStruct->ptMinTrackSize = ptPoint;
+ 
+            ptPoint.x = GetSystemMetrics(SM_CXMAXIMIZED);   //Maximum width of the window.
+            ptPoint.y = GetSystemMetrics(SM_CYMAXIMIZED);   //Maximum height of the window.
+            mmiStruct->ptMaxTrackSize = ptPoint;
+        break;
 		case WM_PAINT:
 		{
-			HDC hdc ;
-			PAINTSTRUCT ps ;
 			RECT rect ;
 			hdc=BeginPaint(hWnd,&ps);
 			GetClientRect(hWnd,&rect);
@@ -77,14 +91,14 @@ LRESULT CALLBACK WinProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		break;
 		case WM_CREATE:
 		{
-			// Create an edit box
+			// Create edit box
 			hEdit1=CreateWindowEx(WS_EX_CLIENTEDGE,L"EDIT",L"",WS_CHILD|WS_VISIBLE|ES_MULTILINE|ES_AUTOVSCROLL|ES_AUTOHSCROLL,10,10,600,100,hWnd,(HMENU)IDC_MAIN_EDIT,GetModuleHandle(NULL),NULL);
 			hEdit2=CreateWindowEx(WS_EX_CLIENTEDGE,L"EDIT",L"nothing to do here...",WS_CHILD|WS_VISIBLE|ES_MULTILINE|ES_AUTOVSCROLL|ES_AUTOHSCROLL,10,120,490,56,hWnd,(HMENU)IDC_MAIN_EDIT,GetModuleHandle(NULL),NULL);
 			HGDIOBJ hfDefault=GetStockObject(17);
 			SendMessage(hEdit1,WM_SETFONT,(WPARAM)hfDefault,MAKELPARAM(FALSE,0));
 			SendMessage(hEdit1,WM_SETTEXT,NULL,(LPARAM)L"Insert text here...");
 
-			// Create a push button
+			// Create push button
 			HWND hWndButton1=CreateWindowEx(NULL,L"BUTTON",L"OK",WS_TABSTOP|WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,510,120,100,24,hWnd,(HMENU)IDC_MAIN_BUTTON,GetModuleHandle(NULL),NULL);
 			HWND hWndButton2=CreateWindowEx(NULL,L"BUTTON",L"Cancel",WS_TABSTOP|WS_VISIBLE|WS_CHILD|BS_DEFPUSHBUTTON,510,150,100,24,hWnd,(HMENU)IDC_2ND_BUTTON,GetModuleHandle(NULL),NULL);
 			SendMessage(hWndButton1,WM_SETFONT,(WPARAM)hfDefault,MAKELPARAM(FALSE,0));
